@@ -1,19 +1,20 @@
 ## Installation
 
 ```bash
-hello
+git clone https://github.com/daudputra/YT-downloader-docker-flask.git
+cd YT-downloader-docker-flask
 ```
 
 ```bash
-ksndaks
+docker build --tag yt-downloader .
 ```
 
 ## Usage
 
 ```bash
-sajdksad
+docker run -p 3030:5000 yt-downloader
 ```
-djsadjsahdk
+Go to localhost:3030
   
 ## License
 
