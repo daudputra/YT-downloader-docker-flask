@@ -12,7 +12,7 @@ docker build --tag yt-downloader .
 ## Usage
 
 ```bash
-docker run -p 3030:5000 yt-downloader
+docker run -p 80:5000 yt-downloader
 ```
 Go to http://localhost:3030/
   
