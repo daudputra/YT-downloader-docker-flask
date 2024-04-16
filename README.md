@@ -14,7 +14,7 @@ docker build --tag yt-downloader .
 ```bash
 docker run -p 80:5000 yt-downloader
 ```
-Go to http://localhost:3030/
+Go to http://localhost:80
   
 ## License
 
