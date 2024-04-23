@@ -1,47 +1,54 @@
+
+# ! masih mendownload dengan program bukan dengan browser
+# ! kadang masih tidak bisa menampilkan thumbnail meskipun di maxres dan hqdefault image nya ada
+# TODO: buat pilihan resolusi
+
 from flask import Flask, render_template, request, send_from_directory, make_response
 from pytube import YouTube
 from werkzeug.utils import secure_filename
-import os
 import requests
 
 app = Flask(__name__)
 
-def get_video_info(video_url):
-    try:
-        embed_url = f'https://noembed.com/embed?url={video_url}'
-        response = requests.get(embed_url)
-        response.raise_for_status()
-        data = response.json()
-        if 'thumbnail_url' in data:
-            return {'thumbnail_url': data['thumbnail_url']}
-    except Exception as e:
-        print(f'Error fetching video info: {e}')
-    return None
+def get_thumbnail_video(video_id):
+    maxres_url = f'https://img.youtube.com/vi/{video_id}/maxresdefault.jpg'
+    hqdefault_url = f'https://img.youtube.com/vi/{video_id}/hqdefault.jpg'
+
+    response = requests.head(maxres_url)
+    if response.status_code == 200:
+        return hqdefault_url
+    else:
+        return maxres_url
 
 
 @app.route('/', methods=['GET', 'POST'])
 def download_video():
     if request.method == 'POST':
         video_url = request.form['video_url']
-        video_info = get_video_info(video_url)
+        video_id = video_url.split('/')[-1].split('?')[0]  
+        
 
         try:
             yt = YouTube(video_url)
-            stream = yt.streams.filter(progressive=True, file_extension='mp4').first()
+            stream = yt.streams.filter(progressive=True, file_extension='mp4', resolution='360p').first()
+            # stream = yt.streams.get_highest_resolution()
             if stream:
-                filename = secure_filename(yt.title) + '.mp4'
-                stream.download(output_path='downloads/', filename=filename)
-                response = make_response(send_from_directory('downloads/', filename, as_attachment=True, mimetype='video/mp4'))
+                filename = secure_filename(yt.title) + '.mp4' if yt.title else video_id + '.mp4'
+                stream.download(output_path='C:/Users/ASUS Vivobook/Downloads', filename=filename)
+                response = make_response(send_from_directory('C:/Users/ASUS Vivobook/Downloads', filename, as_attachment=True, mimetype='video/mp4'))
                 response.headers['Content-Disposition'] = f'attachment; filename="{filename}"'
-                return response
+                img_url = get_thumbnail_video(video_id)
+                
+                return render_template('index.html', img_url=img_url, response=response, video_url=video_url)
+                # return response
+
             else:
                 return render_template('index.html', error_message='No MP4 video available for download.')
         except Exception as e:
-            return render_template('index.html', error_message=f'Error: {str(e)}', video_info=video_info)
+            return render_template('index.html', error_message=f'Error: {str(e)}')
 
     return render_template('index.html', video_info=None)
 
+
 if __name__ == '__main__':
-    os.makedirs('downloads', exist_ok=True)
-    
     app.run(debug=True, host='0.0.0.0', port=int(5000))

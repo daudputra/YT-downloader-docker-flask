@@ -7,18 +7,41 @@
     <title>YouTube Video Downloader</title>
 </head>
 <body>
-    <h1>YouTube Video Downloader</h1>
+    <!-- <h1>YouTube Video Downloader</h1> -->
 
     <p class="text">Enter a YouTube video URL :</p>
     <form action="{{ url_for('download_video') }}" method="POST">
         <input type="text" id="video_url" name="video_url" required placeholder="Enter YouTube Video URL">
-        <button type="submit">Download</button>
+        <button type="submit" class="start-btn" id="start-btn">Start -></button>
     </form>
 
-    {% if video_info %}
-    <div class="thumbnail">
-        <img src="{{ video_info.thumbnail_url }}" alt="Video Thumbnail">
+    {% if error_message %}
+    <div class="error">
+        <p>{{ error_message }}</p>
     </div>
     {% endif %}
+
+    {% if img_url %}
+    <img src="{{ img_url }}" alt="Video Thumbnail" class="thumbnail-video">
+    {% endif %}
+
+
+    <button class="resolution-btn" id="resolution-btn">resolution</button>  
+
+    <script>
+        const resolutionButton = document.getElementById('resolution-btn');
+        const videoInput = document.getElementById('video_url');
+
+        videoInput.addEventListener('input', function(e) {
+            e.preventDefault();
+            if (videoInput.value === '') {
+                resolutionButton.style.display = 'none';
+            }else{
+                resolutionButton.style.display = 'block';
+            }
+        });
+
+    </script>
+
 </body>
 </html>
