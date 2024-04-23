@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,7 +12,7 @@
 
     <p class="text">Enter a YouTube video URL :</p>
     <form action="{{ url_for('download_video') }}" method="POST">
-        <input type="text" id="video_url" name="video_url" required placeholder="Enter YouTube Video URL">
+        <input type="text" id="video_url" name="video_url" required placeholder="Enter YouTube Video URL" value="{{ video_url }}">
         <button type="submit" class="start-btn" id="start-btn">Start -></button>
     </form>
 
@@ -32,15 +33,19 @@
         const resolutionButton = document.getElementById('resolution-btn');
         const videoInput = document.getElementById('video_url');
 
-        videoInput.addEventListener('input', function(e) {
-            e.preventDefault();
-            if (videoInput.value === '') {
-                resolutionButton.style.display = 'none';
-            }else{
+        window.addEventListener('DOMContentLoaded', function() {
+            if (videoInput.value.trim() !== '') {
                 resolutionButton.style.display = 'block';
             }
         });
 
+        videoInput.addEventListener('input', function(e) {
+            if (videoInput.value.trim() === '') {
+                resolutionButton.style.display = 'none';
+            } else {
+                resolutionButton.style.display = 'block';
+            }
+        });
     </script>
 
 </body>

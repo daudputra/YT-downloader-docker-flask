@@ -1,8 +1,4 @@
 
-# ! masih mendownload dengan program bukan dengan browser
-# ! kadang masih tidak bisa menampilkan thumbnail meskipun di maxres dan hqdefault image nya ada
-# TODO: buat pilihan resolusi
-
 from flask import Flask, render_template, request, send_from_directory, make_response
 from pytube import YouTube
 from werkzeug.utils import secure_filename
@@ -33,9 +29,10 @@ def download_video():
             stream = yt.streams.filter(progressive=True, file_extension='mp4', resolution='360p').first()
             # stream = yt.streams.get_highest_resolution()
             if stream:
+                download_path = 'C:/Users/ASUS Vivobook/Downloads'
                 filename = secure_filename(yt.title) + '.mp4' if yt.title else video_id + '.mp4'
-                stream.download(output_path='C:/Users/ASUS Vivobook/Downloads', filename=filename)
-                response = make_response(send_from_directory('C:/Users/ASUS Vivobook/Downloads', filename, as_attachment=True, mimetype='video/mp4'))
+                stream.download(output_path=download_path, filename=filename)
+                response = make_response(send_from_directory(download_path, filename, as_attachment=True, mimetype='video/mp4'))
                 response.headers['Content-Disposition'] = f'attachment; filename="{filename}"'
                 img_url = get_thumbnail_video(video_id)
                 
