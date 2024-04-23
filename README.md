@@ -17,7 +17,8 @@ docker run -p 80:5000 yt-downloader
 
 ## Change the path to your path
 ```bash
-response = make_response(send_from_directory('C:/Users/ASUS Vivobook/Downloads', filename, as_attachment=True, mimetype='video/mp4'))
+in app.py:
+download_path = 'your/full/path'
 ```
 
 Go to http://localhost:80
