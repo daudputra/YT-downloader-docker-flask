@@ -15,9 +15,8 @@ docker build --tag yt-downloader .
 docker run -p 80:5000 yt-downloader
 ```
 
-## Change the path to your path
+## Change the path
 ```bash
-in app.py:
 download_path = 'your/full/path'
 ```
 
