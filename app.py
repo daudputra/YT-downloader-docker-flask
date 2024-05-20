@@ -1,4 +1,8 @@
 
+# ! masih mendownload dengan program bukan dengan browser
+# ! kadang masih tidak bisa menampilkan thumbnail meskipun di maxres dan hqdefault image nya ada
+# TODO: buat pilihan resolusi
+
 from flask import Flask, render_template, request, send_from_directory, make_response
 from pytube import YouTube
 from werkzeug.utils import secure_filename
@@ -37,7 +41,6 @@ def download_video():
                 img_url = get_thumbnail_video(video_id)
                 
                 return render_template('index.html', img_url=img_url, response=response, video_url=video_url)
-                # return response
 
             else:
                 return render_template('index.html', error_message='No MP4 video available for download.')
