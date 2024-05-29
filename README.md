@@ -17,7 +17,7 @@ docker run -p 80:5000 yt-downloader
 
 ## Change the path
 ```bash
-[(download_path = 'your/full/path'])
+download_path = 'your/full/path'
 ```
 ## Enter the page URL
 ```bash
