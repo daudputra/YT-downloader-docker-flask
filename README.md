@@ -19,8 +19,10 @@ docker run -p 80:5000 yt-downloader
 ```bash
 download_path = 'your/full/path'
 ```
-
+## Enter the page URL
+```bash
 Go to http://localhost:80
+```
   
 ## License
 
