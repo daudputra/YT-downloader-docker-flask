@@ -21,7 +21,7 @@ download_path = 'your/full/path'
 ```
 ## Enter the page URL
 ```bash
-Go to http://localhost:80
+http://localhost:80
 ```
   
 ## License
