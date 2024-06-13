@@ -1,3 +1,6 @@
+> [!CAUTION]
+> Can't download videos that require login.
+> 
 ## Installation
 
 ```bash
@@ -21,7 +24,6 @@ download_path = 'your/full/path'
 ```
 ## Enter the page URL
 [http://localhost:80](http://localhost:80)
-
   
 ## License
 
